@@ -1,2 +1,1 @@
-# mini-project
-# mini-project
+# mini-project: online book portal
