@@ -1,0 +1,10 @@
+<div *ngIf="!books">
+    <h3>Searching..</h3>
+</div>
+<div *ngIf="books">
+    <ul>
+        <li *ngFor="let b of books">
+            <a>{{b.title}}</a>
+        </li>
+    </ul>
+</div>
