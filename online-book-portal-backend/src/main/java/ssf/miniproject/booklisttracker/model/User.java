@@ -48,9 +48,10 @@ public class User implements Serializable{
         this.id = generateId(8);
     }
 
-    public User(String username) {
+    public User(String username, String password) {
         this.id = generateId(8);
         this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -98,6 +99,7 @@ public class User implements Serializable{
 
     public static User createForm(MultiValueMap<String, String> form) {
 		User user = new User();
+        user.setId(user.getId());
         user.setUsername(form.getFirst("username"));
         user.setPassword(form.getFirst("password"));
         return user;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from '../models';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -15,50 +15,34 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup
   values$!: Subscription
   state$!: Subscription
+  id!: string 
 
-  constructor(private fb: FormBuilder, private loginSvc: LoginService) { }
-  
-  
-  
-  
+  constructor(private fb: FormBuilder, private router: Router,private loginSvc: LoginService) { }
+
+
+ 
   ngOnInit(): void {
-    this.initForm();
-  }
+    this.loginForm = this.createForm()  }
+
+  createUser(){
+
+    const formData = new FormData()
+    formData.set("username", this.loginForm.value['username'])
+    formData.set("password", this.loginForm.value['password'])
 
 
+    this.loginSvc.createUser(formData).then(result => {
+      this.id = result["id"]
+    }).catch(error => {
+      console.log(error)
+    })
 
-  processLogin(){
-    const user: User = this.loginForm.value as User 
-    this.loginSvc.saveuser(user)
-      .then(result => {
-        console.info(">>> result", result)
-        this.initForm()
-      })
-      .catch(error => {
-        console.info('>>>> error: ', error)
-      })
-
-  
-  }
-
-
-  private initForm() {
+    
+ 
     this.loginForm = this.createForm()
-    if (this.values$) {
-      this.values$.unsubscribe()
-      this.state$.unsubscribe()
-    }
-    this.values$ = this.loginForm.valueChanges.subscribe(
-      (values: any) => {
-        console.info('>>> values: ', values)
-      }
-    )
-    this.state$ = this.loginForm.statusChanges.subscribe(
-      (state: any) => {
-        console.info('>>> state: ', state)
-      }
-    )
   }
+
+ 
 
   private createForm(): FormGroup {
     return this.fb.group({

@@ -18,10 +18,12 @@ public class UserRepo {
     private JdbcTemplate template;
 
 
-    public  Integer insertUserIntoRepo(User user){
-        Integer inserted = template.update(SQL_INSERT_USER, user.getId(), user.getUsername(), user.getPassword(), user.getBooks());
+    public  boolean insertUserIntoRepo(String id, String username, String password){
 
-        return inserted;
+        System.out.println("inserting into mysql");
+        int inserted = template.update(SQL_INSERT_USER, id, username, password);
+
+        return inserted > 0;
     }
 
     public Integer validateUser(User user) throws Exception {
@@ -29,6 +31,5 @@ public class UserRepo {
         return template.queryForObject(SQL_VALIDATE_LOGIN, Integer.class, new Object[] { user.getUsername(), user.getPassword() });
     }
 
-    
-    
+
 }

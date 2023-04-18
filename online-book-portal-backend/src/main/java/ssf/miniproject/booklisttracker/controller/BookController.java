@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ssf.miniproject.booklisttracker.model.Book;
 import ssf.miniproject.booklisttracker.model.User;
 import ssf.miniproject.booklisttracker.repository.BooksRepo;
-import ssf.miniproject.booklisttracker.service.BooksService;
+import ssf.miniproject.booklisttracker.service.BookService;
 
 @Controller
 @RequestMapping("/book")
@@ -34,7 +34,7 @@ public class BookController {
     BooksRepo bookRepo;
 
     @Autowired
-    BooksService service;
+    BookService service;
 
     // @GetMapping("/search")
     // public String searchBooks(@RequestParam("searchParam") String searchKeyword,

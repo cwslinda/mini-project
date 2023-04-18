@@ -5,26 +5,18 @@ import { User } from "../models";
 
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class LoginService {
 
     constructor(private http: HttpClient) { }
 
-    saveuser(user: User): Promise<User>{
+    createUser(formData: FormData): Promise<any>{
 
-        const payload = new HttpParams()
-        .set("name", user.username)
-        .set("password", user.password)
-
-        const headers = new HttpHeaders()
-        .set("Content-Type", "application/x-www-form-urlencoded")
-        .set("Accept", "application/json")
-       
-
-        return firstValueFrom(
-            this.http.post<User>(`api/login`
-                , payload.toString(), { headers })
-          )
+    return firstValueFrom(
+        this.http.post<any>('/api/register', formData)
+        )
 
     }
 }

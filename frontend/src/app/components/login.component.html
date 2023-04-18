@@ -1,6 +1,6 @@
 <h2>Login</h2>
 
-<form [formGroup]="loginForm" (ngSubmit)="processLogin()">
+<form [formGroup]="loginForm" (ngSubmit)="createUser()">
   <table>
     <tr>
       <td>Username:</td>
@@ -11,7 +11,7 @@
     <tr>
       <td>Password:</td>
       <td>
-        <input type="tel" size="30" placeholder="Password" formControlName="password">
+        <input type="text" size="30" placeholder="Password" formControlName="password">
       </td>
     </tr>
     <tr>

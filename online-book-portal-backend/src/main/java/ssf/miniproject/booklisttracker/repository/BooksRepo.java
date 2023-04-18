@@ -25,8 +25,6 @@ public class BooksRepo {
     
 
 
-    // @Autowired
-    // RedisTemplate<String, Object> template;
 
 
     public BooksRepo(){
