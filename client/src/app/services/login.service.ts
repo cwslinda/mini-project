@@ -15,7 +15,7 @@ export class LoginService {
     createUser(formData: FormData): Promise<any>{
 
     return firstValueFrom(
-        this.http.post<any>('/api/register', formData)
+        this.http.post<any>('https://skillful-pets-production.up.railway.app/api/register', formData)
         )
 
     }
