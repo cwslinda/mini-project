@@ -72,7 +72,7 @@ public class BookRESTController {
             return ResponseEntity.status(504).build();
         }
 
-        System.out.println(bookLIST);
+        System.out.println(bookList);
         
         return ResponseEntity.ok(bookList);
     }
