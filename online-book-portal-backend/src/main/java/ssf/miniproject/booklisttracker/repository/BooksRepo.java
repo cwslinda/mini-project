@@ -1,72 +1,59 @@
 package ssf.miniproject.booklisttracker.repository;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import ssf.miniproject.booklisttracker.model.Book;
 import ssf.miniproject.booklisttracker.model.User;
 
+import static ssf.miniproject.booklisttracker.repository.Queries.*;
+
 @Repository
 public class BooksRepo {
     private static final Logger logger = LoggerFactory.getLogger(BooksRepo.class);
-    
-    private User user;
-    private String username;
-    private CopyOnWriteArrayList<Book> savedBooks = new CopyOnWriteArrayList<>();
-    private List<Book> searchedBooks = new CopyOnWriteArrayList<>();
+  
+    @Autowired
+    private JdbcTemplate template;
 
-    
+    public Optional<List<Book>> getUserBooksFromRepo(String userId){
 
 
+        SqlRowSet rs = template.queryForRowSet(SQL_SELECT_BOOKS_BY_USERID, userId);
 
+        final List<Book> bookList = new LinkedList<>();
+        while(rs.next()){
+            bookList.add(Book.createSQL(rs));
+        }
 
-    public BooksRepo(){
-        
+        return Optional.of(bookList);
+
     }
 
-    public BooksRepo(String username){
-        this.username = username;
-    }
-    
-    // public void save(User user) {
-    //         template.opsForValue().set(user.getUsername(), user);
-    //     }
-        
-    
-    // public User getUserByUsername(String username) {
-    //         User result = null;
-    
-    //         Set<String> keys = template.keys("*");
-    //         if (keys.contains(username)) {
-    //             result = (User) template.opsForValue().get(username);
-    //         }
-    
-    //         return result;
-    //     }
+    public boolean insertBookNotExist(Book book, String userId){
+         int inserted = template.update(SQL_INSERT_BOOK, book.getId(), book.getTitle(), book.getDescription(), book.getAuthors(), book.getPublishedDate(), book.getPreviewLink(), book.getUrlLink(), book.getImageUrl(), userId);
 
-    public CopyOnWriteArrayList<Book> getSavedBooks() {
-        return savedBooks;
-    }
+        return inserted > 0;
 
-    public void setSavedBooks(CopyOnWriteArrayList<Book> savedBooks) {
-        this.savedBooks = savedBooks;
     }
 
 
+    public boolean checkIfBookExists(Book book){
+        SqlRowSet rs = template.queryForRowSet(SQL_SELECT_BOOK_BY_BOOKID, book.getId());
 
-    public List<Book> getSearchedBooks() {
-        return searchedBooks;
+
+        return rs.next();
     }
 
-    public void setSearchedBooks(List<Book> searchedBooks) {
-        this.searchedBooks = searchedBooks;
-    }
+    
 }
 

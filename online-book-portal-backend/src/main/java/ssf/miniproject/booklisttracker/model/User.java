@@ -12,6 +12,7 @@ import jakarta.json.JsonObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
@@ -22,11 +23,19 @@ public class User implements Serializable{
     private String username;
     private String id;
     private String password;
+    private String email;
     private List<Book> books = new LinkedList<>();
     
     
     
-    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -40,18 +49,17 @@ public class User implements Serializable{
         return books;
     }
 
-    public void setBooks(CopyOnWriteArrayList<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
-    public User() {
-        this.id = generateId(8);
-    }
+    public User(){}
 
-    public User(String username, String password) {
-        this.id = generateId(8);
+    public User(String id, String username, String password, String email) {
+        this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -70,15 +78,15 @@ public class User implements Serializable{
         this.id = id;
     }
 
-    private String generateId(int numChars) {
-        Random r = new Random();
-        StringBuilder sb = new StringBuilder();
-        while (sb.length() < numChars) {
-            sb.append(Integer.toHexString(r.nextInt()));
-        }
+    // private String generateId(int numChars) {
+    //     Random r = new Random();
+    //     StringBuilder sb = new StringBuilder();
+    //     while (sb.length() < numChars) {
+    //         sb.append(Integer.toHexString(r.nextInt()));
+    //     }
 
-        return sb.toString().substring(0,numChars);
-    }
+    //     return sb.toString().substring(0,numChars);
+    // }
 
     public void saveBook(String bookIdToSave, List<Book> list){
         Book book = new Book();
@@ -102,14 +110,25 @@ public class User implements Serializable{
         user.setId(user.getId());
         user.setUsername(form.getFirst("username"));
         user.setPassword(form.getFirst("password"));
+        user.setEmail(form.getFirst("email"));
         return user;
 		
 	}
+
+    public static User create(SqlRowSet rs) {
+		User user = new User();
+		user.setId(rs.getString("id"));
+		user.setUsername(rs.getString("username"));
+		user.setPassword(rs.getString("password"));
+		return user;
+	}
+
 
     public JsonObject toJson() {
 		return Json.createObjectBuilder()
 			.add("username", username)
             .add("password", password)
+            .add("email", email)
 			.build();
 	}
     

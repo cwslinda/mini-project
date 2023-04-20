@@ -23,6 +23,8 @@ export class ResultsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const userId = localStorage.getItem("userId");
+    console.log(userId)
     this.param$ = this.ar.params.subscribe(
       (params) => {
         this.keyword = params['keyword']

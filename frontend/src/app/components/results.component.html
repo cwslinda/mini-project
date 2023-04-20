@@ -1,10 +1,12 @@
+<h1>Search Results</h1>
 <div *ngIf="!books">
     <h3>Searching..</h3>
 </div>
 <div *ngIf="books">
-    <ul>
-        <li *ngFor="let b of books">
-            <a>{{b.title}}</a>
-        </li>
-    </ul>
+    <div *ngFor="let b of books" class="book">
+    <h4 [routerLink]="['/book',b.id]">{{ b.title }}</h4>
+    <h4>{{b.id}}</h4>
+  </div>
 </div>
+
+

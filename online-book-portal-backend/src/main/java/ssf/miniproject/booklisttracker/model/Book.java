@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -29,7 +32,7 @@ public class Book implements Serializable {
     private String title;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String description;
-    private ArrayList<String> authors;
+    private List<String> authors;
     private String publishedDate;
     private String urlLink;
     private String imageUrl;
@@ -96,11 +99,11 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public ArrayList<String> getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(ArrayList<String> authors) {
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
 
@@ -113,8 +116,8 @@ public class Book implements Serializable {
     }
 
 
-    public static CopyOnWriteArrayList<Book> createJson(String json) throws IOException{
-        CopyOnWriteArrayList<Book> bookList = new CopyOnWriteArrayList<>();
+    public static List<Book> createJson(String json) throws IOException{
+        List<Book> bookList = new LinkedList<>();
 
         try(InputStream is = new ByteArrayInputStream(json.getBytes())){
             JsonReader reader = Json.createReader(is);
@@ -167,7 +170,7 @@ public class Book implements Serializable {
         
         if (volumeObject.getJsonArray("authors") != null){
         JsonArray authorsArray = volumeObject.getJsonArray("authors");
-        ArrayList<String> authorsArrayList = new ArrayList<>();
+        List<String> authorsArrayList = new LinkedList<>();
                 if (authorsArray.size() != 0) {
                     for (int j = 0; j < authorsArray.size(); j++) {
                         authorsArrayList.add(authorsArray.getString(j));
@@ -182,5 +185,24 @@ public class Book implements Serializable {
         }
         return book;
     }  
+
+
+    public static Book createSQL(SqlRowSet rs){
+        Book book = new Book();
+        book.setId(rs.getString("bookId"));
+        book.setTitle(rs.getString("title"));
+        book.setDescription(rs.getString("description"));
+        
+        book.setPublishedDate(rs.getString("publishedDate"));
+        book.setUrlLink(rs.getString("urlLink"));
+        book.setPreviewLink(rs.getString("previewLink"));
+
+        //book.setAuthors(rs.getString("authors")));
+
+        return book;
+
+
+
+    }
 } 
 

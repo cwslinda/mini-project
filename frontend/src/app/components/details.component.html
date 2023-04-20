@@ -1,0 +1,16 @@
+
+<h1>Details</h1>
+<div *ngIf="!book">
+    <h3>Loading..</h3>
+</div>
+<div *ngIf="book">
+    <h2>{{book.title}}</h2>
+    <p>{{book.description}}</p>
+    <p>{{book.authors}}</p>
+
+    <button (click)="processForm()">save</button>
+
+</div>
+
+
+<button [routerLink]="['/home']">back</button>

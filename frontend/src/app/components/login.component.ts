@@ -16,7 +16,8 @@ export class LoginComponent implements OnInit {
   values$!: Subscription
   state$!: Subscription
   id!: string 
-
+  username!: string
+  password!: string
   constructor(private fb: FormBuilder, private router: Router,private loginSvc: LoginService) { }
 
 
@@ -28,18 +29,22 @@ export class LoginComponent implements OnInit {
 
     const formData = new FormData()
     formData.set("username", this.loginForm.value['username'])
-    formData.set("password", this.loginForm.value['password'])
+    formData.set("password", this.loginForm.value['password']) 
+    formData.set("email", this.loginForm.value['email'])
 
 
     this.loginSvc.createUser(formData).then(result => {
-      this.id = result["id"]
-    }).catch(error => {
+      this.id = result["userId"]
+
+      this.username = result["username"]
+      localStorage.setItem("userId", this.id)
+      localStorage.setItem("username", this.username)
+        this.router.navigate([`/home/${this.id}`])
+      }).catch(error => {
       console.log(error)
     })
-
-    
- 
-    this.loginForm = this.createForm()
+      
+      this.loginForm = this.createForm()
   }
 
  
@@ -48,6 +53,7 @@ export class LoginComponent implements OnInit {
     return this.fb.group({
       username: this.fb.control('', [ Validators.required ]),
       password: this.fb.control('', [ Validators.required ]),
+      email: this.fb.control('', [Validators.required])
     })
   }
   

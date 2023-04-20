@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { lastValueFrom } from "rxjs";
+import { firstValueFrom, last, lastValueFrom } from "rxjs";
 import { Book } from "../models";
 
 @Injectable({
@@ -21,4 +21,53 @@ export class BookService{
 
         return lastValueFrom(this.http.get<Book[]>(`api/search`, {headers, params}))
     }
+
+
+   public getSingleBookById(bookId: string): Promise<Book>{
+    // const params = new HttpParams().set("id", bookId)
+
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+
+    return lastValueFrom(this.http.get<Book>(`/api/book/${bookId}`, {headers})
+    )
+   }
+
+   public getBooksFromUser(userId: string): Promise<any>{
+
+            const headers = new HttpHeaders()
+            .set('content-type', 'application/json')
+            .set('Access-Control-Allow-Origin', '*')
+
+      return lastValueFrom(this.http.get<any>(`/api/user/${userId}`, {headers})
+      
+    )
+   }
+
+   public saveBook(book: Book, userId: string): Promise<any>{
+    
+    
+
+                const form = new FormData()
+                form.set("bookId", book.id)
+                form.set("title", book.title)
+                form.set("text", book.description)
+                form.set("authors", book.authors.toString())
+                form.set("publishedDate", book.publishedDate)
+                form.set("urlLink", book.urlLink)
+                form.set("imageUrl", book.imageUrl)
+                form.set("previewLink", book.previewLink)
+               
+
+              
+          
+        return lastValueFrom(
+                    this.http.post<any>(`/api/save/${userId}`, form)
+                )
+   }
+
+ 
+
 }
+

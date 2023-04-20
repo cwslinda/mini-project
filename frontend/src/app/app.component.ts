@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'online-news-portal';
+
+
+
+  logout() : void {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+  }
 }

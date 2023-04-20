@@ -9,6 +9,8 @@ import { LoginComponent } from './components/login.component';
 import { LoginService } from './services/login.service';
 import { RouterModule, Routes } from '@angular/router';
 import { ResultsComponent } from './components/results.component';
+import { DetailsComponent } from './components/details.component';
+import { BookService } from './services/book.service';
 
 const appRoutes: Routes = [
   {
@@ -20,7 +22,9 @@ const appRoutes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  { path: '**', redirectTo: '/', pathMatch: 'full' }
+  { path: 'home/:id', component: HomeComponent },
+  { path: 'book/:bookId', component: DetailsComponent },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ]
 
 @NgModule({
@@ -28,7 +32,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    ResultsComponent
+    ResultsComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [LoginService],
+  providers: [LoginService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

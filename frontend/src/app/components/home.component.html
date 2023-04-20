@@ -1,6 +1,18 @@
+
+
 <div>
     <form [formGroup]="form" (ngSubmit)="search()">
         <input type="text" formControlName="keyword">
         <button>Search</button>
     </form>
 </div>
+
+
+<div *ngIf="books">
+    <div *ngFor="let b of books" class="book">
+    <h4 [routerLink]="['/book',b.id]">{{ b.title }}</h4>
+    <h4>{{b.description}}</h4>
+  </div>
+</div>
+
+
