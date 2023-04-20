@@ -18,10 +18,7 @@ const appRoutes: Routes = [
     //canDeactivate: [ ContactRepository ]
   },
   { path: 'books/:keyword', component: ResultsComponent},
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+  {path: 'login', component: LoginComponent},
   { path: 'home/:id', component: HomeComponent },
   { path: 'book/:bookId', component: DetailsComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
