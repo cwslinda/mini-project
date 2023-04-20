@@ -71,6 +71,8 @@ public class BookRESTController {
         if (bookList == null) {
             return ResponseEntity.status(504).build();
         }
+
+        System.out.println(bookLIST);
         
         return ResponseEntity.ok(bookList);
     }
