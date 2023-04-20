@@ -13,9 +13,13 @@ export class LoginService {
     constructor(private http: HttpClient) { }
 
     createUser(formData: FormData): Promise<any>{
+            
+        const headers = new HttpHeaders()
+        .set('content-type', 'application/json')
+        .set('Access-Control-Allow-Origin', '*')
 
     return firstValueFrom(
-        this.http.post<any>('https://skillful-pets-production.up.railway.app/api/register', formData)
+        this.http.post<any>('https://skillful-pets-production.up.railway.app/api/register', {formData, headers})
         )
 
     }
