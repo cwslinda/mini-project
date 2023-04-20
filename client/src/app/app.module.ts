@@ -13,12 +13,9 @@ import { DetailsComponent } from './components/details.component';
 import { BookService } from './services/book.service';
 
 const appRoutes: Routes = [
-  {
-    path: '', component: HomeComponent,
-    //canDeactivate: [ ContactRepository ]
-  },
+  { path: '', component: HomeComponent,},
   { path: 'books/:keyword', component: ResultsComponent},
-  {path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent},
   { path: 'home/:id', component: HomeComponent },
   { path: 'book/:bookId', component: DetailsComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
