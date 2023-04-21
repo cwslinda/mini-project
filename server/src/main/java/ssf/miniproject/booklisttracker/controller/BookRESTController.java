@@ -110,23 +110,28 @@ public class BookRESTController {
     
     }
 
-    @PostMapping(path="/save/{userId}", 
-    consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
-    produces=MediaType.APPLICATION_JSON_VALUE )
+    @PostMapping(path="/save/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces=MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
     @CrossOrigin()
-    public ResponseEntity<String> saveUserBook(@PathVariable("userId") String id, @RequestPart("title") String title, @RequestPart("bookId") String bookId) {
+    public ResponseEntity<Book> saveUserBook(@PathVariable("userId") String id, @RequestPart String form) {
+
+        // System.out.println(form);        
+        // System.out.println("title >>>" + title);
+        // System.out.println(bookId);
+        // Book book = new Book();
+        // book.setTitle(title);
 
         
-        System.out.println("title >>>" + title);
-        System.out.println(bookId);
         Book book = new Book();
-        book.setTitle(title);
-        System.out.println(book.getTitle());
-
+        JsonReader reader = Json.createReader(new StringReader(form));
+        JsonObject data = reader.readObject();
         
+        book.setId(data.getString("id"));
+        book.setTitle(data.getString("title"));
+        book.setDescription(data.getString("description"));
 
+        service.saveBook(book, id);
 
-        return ResponseEntity.ok("okay");
+        return ResponseEntity.ok(book);
     }
 }

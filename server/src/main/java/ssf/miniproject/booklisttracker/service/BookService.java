@@ -138,14 +138,14 @@ public class BookService{
         return bookListOps.get();
     }
 
-    public void saveBook(List<Book> bookList, String userId){
-        for(Book b: bookList){
-            if(!bookRepo.checkIfBookExists(b)){
-                bookRepo.insertBookNotExist(b, userId);
+    public void saveBook(Book book, String userId){
+            if(!bookRepo.checkIfBookExists(book)){
+                bookRepo.insertBookNotExist(book, userId);
+
+            System.out.println("book is inserted into database");
             }
         }
 
     }
     
 
-}

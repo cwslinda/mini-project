@@ -138,6 +138,10 @@ public class Book implements Serializable {
          return bookList;
     }
 
+    // public static Book createSingleBook(String json) {
+
+    // }
+
 
     public static Book createSingleBookJson(JsonObject booksObject){
         Book book = new Book();
