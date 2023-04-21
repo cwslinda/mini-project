@@ -20,7 +20,7 @@ import jakarta.json.JsonObject;
 import ssf.miniproject.booklisttracker.model.User;
 import ssf.miniproject.booklisttracker.service.UserService;
 
-@Controller
+@Restcontroller
 @RequestMapping(path="/api")
 public class UserController {
 
