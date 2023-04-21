@@ -22,6 +22,7 @@ import ssf.miniproject.booklisttracker.service.UserService;
 
 @Controller
 @RequestMapping(path="/api")
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired 
@@ -30,7 +31,6 @@ public class UserController {
     @PostMapping(path="/register", consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
     produces=MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
-    @CrossOrigin("origins=https://mini-project-tan.vercel.app")
     public ResponseEntity<String>registerUser(@RequestPart("username") String username, @RequestPart("password") String password, @RequestPart("email") String email){
          
         User u = new User();
