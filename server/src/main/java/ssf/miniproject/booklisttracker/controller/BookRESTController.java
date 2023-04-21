@@ -58,7 +58,6 @@ public class BookRESTController {
 
 
 
-
     @GetMapping(path="/search", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin()

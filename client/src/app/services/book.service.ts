@@ -20,7 +20,7 @@ export class BookService{
                         .set('Access-Control-Allow-Origin', '*')
 
         //return lastValueFrom(this.http.get<Book[]>(`api/search`, {headers, params}))
-        return lastValueFrom(this.http.get<Book[]>(`https://skillful-pets-production.up.railway.app/api/search`, {headers, params}))
+        return lastValueFrom(this.http.get<Book[]>(`https://ignorant-north-production.up.railway.app/api/search`, {headers, params}))
     }
 
 
@@ -31,7 +31,7 @@ export class BookService{
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
 
-    return lastValueFrom(this.http.get<Book>(`https://skillful-pets-production.up.railway.app/api/book/${bookId}`, {headers})
+    return lastValueFrom(this.http.get<Book>(`https://ignorant-north-production.up.railway.app/api/book/${bookId}`, {headers})
     )
    }
 
@@ -41,7 +41,7 @@ export class BookService{
             .set('content-type', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
 
-      return lastValueFrom(this.http.get<any>(`https://skillful-pets-production.up.railway.app/api/user/${userId}`, {headers})
+      return lastValueFrom(this.http.get<any>(`https://ignorant-north-production.up.railway.app/api/user/${userId}`, {headers})
       
     )
    }
@@ -64,7 +64,7 @@ export class BookService{
               
           
         return lastValueFrom(
-                    this.http.post<any>(`https://skillful-pets-production.up.railway.app/api/save/${userId}`, form)
+                    this.http.post<any>(`https://ignorant-north-production.up.railway.app/api/save/${userId}`, form)
                 )
    }
 

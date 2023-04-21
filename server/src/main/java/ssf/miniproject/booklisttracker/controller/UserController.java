@@ -21,16 +21,16 @@ import ssf.miniproject.booklisttracker.model.User;
 import ssf.miniproject.booklisttracker.service.UserService;
 
 @Controller
-@RequestMapping(path="/api")
-@CrossOrigin("*")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired 
     private UserService svc;
 
-    @PostMapping(path="/register", consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
-    produces=MediaType.APPLICATION_JSON_VALUE )
+    @PostMapping(path = "/register", consumes=MediaType.MULTIPART_FORM_DATA_VALUE, 
+    produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @CrossOrigin()
     public ResponseEntity<String>registerUser(@RequestPart("username") String username, @RequestPart("password") String password, @RequestPart("email") String email){
          
         User u = new User();
