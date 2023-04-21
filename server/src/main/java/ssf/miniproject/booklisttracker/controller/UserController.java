@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping(path="/register", consumes=MediaType.MULTIPART_FORM_DATA_VALUE,
     produces=MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
-    @CrossOrigin()
+    @CrossOrigin("*")
     public ResponseEntity<String>registerUser(@RequestPart("username") String username, @RequestPart("password") String password, @RequestPart("email") String email){
          
         User u = new User();
