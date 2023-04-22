@@ -4,6 +4,10 @@ import java.util.Date;
 
 import org.bson.Document;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
+
 public class Comment {
 
     private String commentId;
@@ -86,4 +90,16 @@ public class Comment {
 		return comment;
 	}
 
+    // public JsonObject toJSON(){
+	// 	return Json.createObjectBuilder()
+	// 			.add("commentId", getCommentId())
+	// 			.add("commentDate", getCommentDate())
+	// 			.add("userId", getUserId())
+	// 			.add("bookId", getBookId())
+    //             .add("username", getUsername())
+    //             .add("commentTitle", getCommentTitle())
+    //             .add("comment", getComment())
+	// 			.build();
+
+	// }
 }

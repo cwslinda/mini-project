@@ -21,6 +21,16 @@ export interface Book {
 export interface Comment {
     bookId: string
     userId: string
-    title: string 
+    commentTitle: string 
     comment: string 
+}
+
+export interface CommentResult {
+    bookId: string
+    comment: string
+    commentDate: string
+    commentId: string
+    commentTitle: string
+    userId: string
+    username: string
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Book } from '../models';
+import { Book, CommentResult } from '../models';
 import { BookService } from '../services/book.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommentService } from '../services/comment.service';
@@ -17,7 +17,7 @@ export class DetailsComponent {
   book!: Book
   param$!: Subscription
   bookId!: string
-  comments!: string[]
+  comments!: CommentResult[]
   userId!: string 
   commentForm!: FormGroup
   commentId!: string
@@ -38,6 +38,18 @@ export class DetailsComponent {
         this.bookSvc.getSingleBookById(this.bookId)
           .then(result => {
             this.book = result
+          }).catch(error => {
+            console.log(error)
+          })
+
+
+          this.commentSvc.getComments(this.bookId)
+          .then(result => {
+            this.comments = result
+            this.comments.forEach(function (value) {
+              console.log(value);
+          });
+
           }).catch(error => {
             console.log(error)
           })

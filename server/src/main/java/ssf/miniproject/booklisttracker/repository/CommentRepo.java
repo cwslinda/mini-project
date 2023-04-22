@@ -1,5 +1,7 @@
 package ssf.miniproject.booklisttracker.repository;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.Document;
@@ -24,14 +26,20 @@ public class CommentRepo {
 		return insertedDoc.getObjectId("_id");
 	}
 
-	public Optional<Comment> getComments(String bookId) {
-		Criteria criteria = Criteria.where("bookId").is(bookId);
-		Query query = Query.query(criteria);
-		Document result = template.findOne(query, Document.class, "comments");
-		if (null == result)
-			return Optional.empty();
+	public List<Comment> getComments(String bookId) {
+        System.out.println("finding comments");
+		
+        List<Document> results = template.find(Query.query(Criteria.where("bookId").is(bookId)), 
+        Document.class, "comments");
+		
+        List<Comment> commentsList = new LinkedList<>();
+        
+        for(Document d: results){
+            Comment c = Comment.create(d);
+            commentsList.add(c);
+        }
 
-		return Optional.of(Comment.create(result));
+		return commentsList;
 	}
 
     

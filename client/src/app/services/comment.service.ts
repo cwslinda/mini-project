@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firstValueFrom, last, lastValueFrom } from "rxjs";
-import { Book } from "../models";
+import { Book, CommentResult } from "../models";
 
 @Injectable({
     providedIn: 'root'
@@ -21,4 +21,15 @@ postComment(formData: FormData): Promise<any>{
     )
 }
 
+
+ getComments(bookId: string): Promise<CommentResult[]>{
+
+    const params = new HttpParams().set("bookId", bookId)
+
+    const headers = new HttpHeaders()
+                    .set('content-type', 'application/json')
+                    .set('Access-Control-Allow-Origin', '*')
+
+    return lastValueFrom(this.http.get<CommentResult[]>(`api/${bookId}/comments`, {headers, params}))
+}
 }

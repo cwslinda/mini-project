@@ -12,6 +12,14 @@
 
 </div>
 
+<div *ngIf="comments">
+    <div *ngFor="let comment of comments" class="comment">
+    <h4> title : {{comment.commentTitle}}</h4>
+    <h4> comment : {{comment.comment}}</h4>
+    <h4> date : {{comment.commentDate}}</h4>
+    <h4> user : {{comment.username}}</h4>
+  </div>
+</div>
 
 <form [formGroup]="commentForm" (ngSubmit)="processCommentForm()">
     <table>

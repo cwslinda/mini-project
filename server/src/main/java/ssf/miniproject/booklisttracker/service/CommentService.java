@@ -1,5 +1,7 @@
 package ssf.miniproject.booklisttracker.service;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,16 +27,31 @@ public class CommentService {
     @Autowired
     private UserRepo userRepo;
 
-    public Optional<Comment> getComments(String bookId) {
+    public List<Comment> getComments(String bookId) {
 
 		// Find the bookId
-		Optional<Comment> opt = commentRepo.getComments(bookId);
-		if (opt.isEmpty())
-			return Optional.empty();
+		List<Comment> results = commentRepo.getComments(bookId);
 
-        Comment comment = opt.get();
+        List<Comment> commentsList = new LinkedList<>();
 
-		return Optional.of(comment);
+        for(Comment c: results){
+
+            Comment comment = new Comment();
+            comment.setBookId(c.getBookId());
+            comment.setComment(c.getComment());
+            comment.setCommentDate(c.getCommentDate());
+            comment.setUserId(c.getUserId());
+            comment.setCommentId(c.getCommentId());
+            comment.setCommentTitle(c.getCommentTitle());
+            
+            commentsList.add(c);
+            
+
+
+        }
+		
+
+		return commentsList;
 	}
     
     public Optional<String> createComment(Comment comment) {
