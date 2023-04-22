@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +34,7 @@ import com.fasterxml.jackson.databind.type.SimpleType;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonReader;
 import ssf.miniproject.booklisttracker.model.Book;
 import ssf.miniproject.booklisttracker.model.User;
@@ -113,22 +113,37 @@ public class BookRESTController {
     @PostMapping(path="/save/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces=MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
     @CrossOrigin()
-    public ResponseEntity<Book> saveUserBook(@PathVariable("userId") String id, @RequestPart String form) {
-
-        // System.out.println(form);        
-        // System.out.println("title >>>" + title);
-        // System.out.println(bookId);
-        // Book book = new Book();
-        // book.setTitle(title);
-
+    public ResponseEntity<Book> saveUserBook(@PathVariable("userId") String id, @RequestPart String form) {     
         
         Book book = new Book();
         JsonReader reader = Json.createReader(new StringReader(form));
         JsonObject data = reader.readObject();
         
+
+        System.out.println(data.getJsonArray("authors").toString());
+        
+        
         book.setId(data.getString("id"));
         book.setTitle(data.getString("title"));
         book.setDescription(data.getString("description"));
+        if(data.getJsonArray("authors")!=null){
+            JsonArray authorsArr = data.getJsonArray("authors");
+            List<String> authorsList = new LinkedList<>();
+                if(authorsArr.size() != 0){
+                    for (int j = 0; j < authorsArr.size(); j++) {
+                        authorsList.add(authorsArr.getString(j));
+                    }
+                }
+    
+            book.setAuthors2(data.getJsonArray("authors").toString());
+        }
+
+        book.setPublishedDate(data.getString("publishedDate"));
+        book.setUrlLink(data.getString("urlLink"));
+        book.setPreviewLink(data.getString("previewLink"));
+
+
+      
 
         service.saveBook(book, id);
 

@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResultsComponent } from './components/results.component';
 import { DetailsComponent } from './components/details.component';
 import { BookService } from './services/book.service';
+import { CommentService } from './services/comment.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent,},
@@ -36,7 +37,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [LoginService, BookService],
+  providers: [LoginService, BookService, CommentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

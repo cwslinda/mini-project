@@ -13,4 +13,22 @@
 </div>
 
 
-<button [routerLink]="['/home']">back</button>
+<form [formGroup]="commentForm" (ngSubmit)="processCommentForm()">
+    <table>
+        <tr>
+            <td>Title</td>
+            <td><input type="text" formControlName="title"></td>
+        </tr>
+        <tr>
+            <td>Comment</td>
+            <td><input type="textare" formControlName="comment"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button type="submit">Post</button></td>
+        </tr>
+    </table>
+</form>
+
+
+<button (click)="back()">back</button>

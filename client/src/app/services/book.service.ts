@@ -10,6 +10,8 @@ export class BookService{
     
     constructor(private http: HttpClient){}
 
+    url = "https://ignorant-north-production.up.railway.app";
+
 
     public getBooks(keyword: string): Promise<Book[]>{
 
@@ -19,8 +21,7 @@ export class BookService{
                         .set('content-type', 'application/json')
                         .set('Access-Control-Allow-Origin', '*')
 
-        //return lastValueFrom(this.http.get<Book[]>(`api/search`, {headers, params}))
-        return lastValueFrom(this.http.get<Book[]>(`https://ignorant-north-production.up.railway.app/api/search`, {headers, params}))
+        return lastValueFrom(this.http.get<Book[]>(`api/search`, {headers, params}))
     }
 
 
@@ -31,7 +32,7 @@ export class BookService{
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
 
-    return lastValueFrom(this.http.get<Book>(`https://ignorant-north-production.up.railway.app/api/book/${bookId}`, {headers})
+    return lastValueFrom(this.http.get<Book>(`/api/book/${bookId}`, {headers})
     )
    }
 
@@ -41,30 +42,32 @@ export class BookService{
             .set('content-type', 'application/json')
             .set('Access-Control-Allow-Origin', '*')
 
-      return lastValueFrom(this.http.get<any>(`https://ignorant-north-production.up.railway.app/api/user/${userId}`, {headers})
+      return lastValueFrom(this.http.get<any>(`/api/user/${userId}`, {headers})
       
     )
    }
 
-   public saveBook(book: Book, userId: string): Promise<any>{
+   public saveBook(form: Book, userId: string): Promise<any>{
     
     
+                const headers = new HttpHeaders()
+                .set('Access-Control-Allow-Origin', '*')
+                .set('Accept', 'application/json')
+            
+           
 
-                const form = new FormData()
-                form.set("bookId", book.id)
-                form.set("title", book.title)
-                form.set("text", book.description)
-                form.set("authors", book.authors.toString())
-                form.set("publishedDate", book.publishedDate)
-                form.set("urlLink", book.urlLink)
-                form.set("imageUrl", book.imageUrl)
-                form.set("previewLink", book.previewLink)
+                const data = new FormData()
+                data.set("form", new Blob([JSON.stringify(form)], {
+                  type: 'application/json'
+              }));
+
+           
                
 
               
           
         return lastValueFrom(
-                    this.http.post<any>(`https://ignorant-north-production.up.railway.app/api/save/${userId}`, form)
+                    this.http.post<any>(`/api/save/${userId}`, data, {headers})
                 )
    }
 

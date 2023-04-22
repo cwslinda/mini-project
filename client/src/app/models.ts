@@ -18,3 +18,9 @@ export interface Book {
 
 }
 
+export interface Comment {
+    bookId: string
+    userId: string
+    title: string 
+    comment: string 
+}

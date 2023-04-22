@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +32,18 @@ public class Book implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String description;
     private List<String> authors;
+    private String authors2;
+
+
+    public String getAuthors2() {
+        return authors2;
+    }
+
+    public void setAuthors2(String authors2) {
+        this.authors2 = authors2;
+    }
+
+
     private String publishedDate;
     private String urlLink;
     private String imageUrl;
@@ -41,7 +52,7 @@ public class Book implements Serializable {
     public Book(){
     }
 
-    public Book(String id, String title, String description,  ArrayList<String>authors, String publishedDate, String urlLink, String imageUrl, String previewLink){
+    public Book(String id, String title, String description,  List<String>authors, String publishedDate, String urlLink, String imageUrl, String previewLink){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -51,6 +62,19 @@ public class Book implements Serializable {
         this.imageUrl = imageUrl;
         this.previewLink = previewLink;
     }
+
+    public Book(String id, String title, String description, String authors2, String publishedDate, String urlLink, String imageUrl, String previewLink){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.authors2 = authors2;
+        this.publishedDate = publishedDate;
+        this.urlLink = urlLink;
+        this.imageUrl = imageUrl;
+        this.previewLink = previewLink;
+    }
+
+
     public String getId() {
         return id;
     }

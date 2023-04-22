@@ -10,6 +10,9 @@ import { User } from "../models";
   })
 export class LoginService {
 
+    url = "https://ignorant-north-production.up.railway.app";
+
+
     constructor(private http: HttpClient) { }
 
     createUser(formData: FormData): Promise<any>{
@@ -18,7 +21,7 @@ export class LoginService {
         .set('Access-Control-Allow-Origin', '*')
 
     return firstValueFrom(
-        this.http.post<any>(`https://ignorant-north-production.up.railway.app/api/register`, formData, {headers})
+        this.http.post<any>(`/api/register`, formData, {headers})
         )
 
     }
