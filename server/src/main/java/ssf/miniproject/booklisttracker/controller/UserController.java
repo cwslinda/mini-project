@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import ssf.miniproject.booklisttracker.model.User;
+import ssf.miniproject.booklisttracker.service.EmailService;
 import ssf.miniproject.booklisttracker.service.UserService;
+
+
+
 
 @Controller
 @RequestMapping("/api")
@@ -26,6 +30,9 @@ public class UserController {
 
     @Autowired 
     private UserService svc;
+
+    @Autowired
+	private EmailService senderService;
 
     @PostMapping(path = "/register", consumes=MediaType.MULTIPART_FORM_DATA_VALUE, 
     produces=MediaType.APPLICATION_JSON_VALUE)
@@ -40,6 +47,12 @@ public class UserController {
         if (svc.validateUser(username, password) == false){
             String userId = UUID.randomUUID().toString().substring(0,8);
             svc.createNewUser(userId, username, password, email);
+
+            String content = "Hello! \n\n" +
+                             "Welcome to BookPortal, you have now signed up an account with us! \n\n " +
+                             "This is a system generated email. Please do alert us if you have not make this request. ";
+
+            senderService.sendEmail(email, "You have signed up with Book Portal", content);
 
             return ResponseEntity.ok(Json.createObjectBuilder()
             .add("userId", userId)
